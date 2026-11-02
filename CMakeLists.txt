@@ -78,7 +78,9 @@ if(NOT MLX_PYTHON_RC EQUAL 0)
 endif()
 
 # MLX include path
-set(MLX_INCLUDE_DIR "${MLX_PYTHON_DIR}/include")
+if(NOT MLX_INCLUDE_DIR)
+  set(MLX_INCLUDE_DIR "${MLX_PYTHON_DIR}/include")
+endif()
 if(NOT EXISTS "${MLX_INCLUDE_DIR}/mlx/mlx.h")
   message(FATAL_ERROR
     "MLX headers not found at ${MLX_INCLUDE_DIR}. "

@@ -43,6 +43,7 @@ EXPECTED = {
     "0.32.0": "v2.13.0",  # NB_INTERNALS 20
     "0.32.1": "v2.13.0",  # NB_INTERNALS 20
     "0.32.2": "v2.15.0",  # NB_INTERNALS 21
+    "0.32.4": "v3.1.0",  # NB_INTERNALS 22, MacPorts MLX fork
 }
 
 _CMAKE = shutil.which("cmake")
@@ -144,7 +145,7 @@ def test_specifier_is_capped_at_top_of_table():
     """BLD-01 class: nothing newer than the verified table may be resolvable."""
     build, _ = _pyproject_specifiers()
     top = max(Version(v) for v in EXPECTED)
-    for candidate in ("0.32.3", "0.33.0", "0.40.0", "1.0.0"):
+    for candidate in ("0.32.5", "0.33.0", "0.40.0", "1.0.0"):
         v = Version(candidate)
         assert v > top
         assert v not in build, f"{candidate} would be picked by build isolation but is unmapped"

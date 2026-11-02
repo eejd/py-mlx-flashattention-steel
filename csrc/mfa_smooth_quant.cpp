@@ -250,7 +250,8 @@ void MFASmoothQuantizeK::eval_gpu(
     out_scale.set_data(allocator::malloc(out_scale.nbytes()));
     // Allocate out_mean separately so we can get its raw buffer pointer.
     auto mean_buf = allocator::malloc(out_mean.nbytes());
-    out_mean.set_data(mean_buf);
+    auto* mean_mtl = reinterpret_cast<MTL::Buffer*>(mean_buf.buffer().ptr());
+    out_mean.set_data(std::move(mean_buf));
 
     const bool is_f16   = (k.dtype() == float16);
     const uint8_t dtype = is_f16 ? 0 : 1;
@@ -262,7 +263,6 @@ void MFASmoothQuantizeK::eval_gpu(
     // Get the raw MTL buffer pointer for k_mean intermediate.
     // This allows both pass 1 (write) and pass 2 (read) to access it
     // without MLX fence interference, similar to the flash decode pattern.
-    auto* mean_mtl = reinterpret_cast<MTL::Buffer*>(mean_buf.ptr());
 
     // ── Pass 1: compute per-channel mean ───────────────────────────────────
     {

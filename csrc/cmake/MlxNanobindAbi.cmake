@@ -30,6 +30,7 @@ set(MFA_MLX_NANOBIND_ABI_TABLE
   "0.32.0=v2.13.0=20"
   "0.32.1=v2.13.0=20"
   "0.32.2=v2.15.0=21"
+  "0.32.4=v3.1.0=22"
 )
 
 # mfa_resolve_nanobind_tag(<mlx_version> <out_var>)
